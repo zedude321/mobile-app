@@ -1,44 +1,48 @@
 import React from 'react';
-import { FormInput } from './components/formImput'
 import {
   StyleSheet,
-  ScrollView,
+  SafeAreaView,
+  Button,
   View,
-  Text,
-  SafeAreaView
+  Alert,
+  TouchableHighlight,
+  Text
 } from 'react-native';
 
 const App = () => {
-  const name = (value: string) => {
-    let pass = true
-    if (/\d/.test(value) || value.length <= 2) {
-      pass = false
-    }
-    return pass
+  const [countS, setcount] = React.useState(0)
+  const onPress = () => { 
+    Alert.alert(
+      "Alert Title",
+      "My Alert Msg",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed"), style: "destructive" }
+      ]
+    );
   }
-
-  const age = (value: any) => {
-    let pass = true
-    if (!/\d/.test(value) || Number(value) < 18 || Number(value) > 100) {
-      pass = false
-    }
-    return pass
-  }
-
-  const email = (value: string) => {
-    let pass = true
-    if (!value.includes('@') || !value.split('@')[1].includes('.')) {
-      pass = false
-    }
-    return pass
+  const count = () => {
+    setcount(countS + 1)
   }
 
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <FormInput validation={name} label='Your name' />
-        <FormInput validation={age} label='Your age' />
-        <FormInput validation={email} label='Your email' type='emailAddress' />
+        <View>
+          <Button onPress={() => {onPress()}} title='Click me' />  
+        </View>
+        <TouchableHighlight onPress={() => {count()}} underlayColor="white">
+          <View>
+            <Text>Hello</Text>
+          </View>
+        </TouchableHighlight>
+        <View>
+          <Text>{countS}</Text>
+        </View>
       </SafeAreaView>
     </>
   );
