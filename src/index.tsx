@@ -2,50 +2,29 @@ import React from 'react';
 import {
   StyleSheet,
   SafeAreaView,
-  Button,
   View,
-  Alert,
-  TouchableHighlight,
   Text
 } from 'react-native';
+import { Appearance, useColorScheme } from 'react-native-appearance';
+
+Appearance.getColorScheme();
 
 const App = () => {
-  const [countS, setcount] = React.useState(0)
-  const onPress = () => { 
-    Alert.alert(
-      "Alert Title",
-      "My Alert Msg",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed"), style: "destructive" }
-      ]
-    );
-  }
-  const count = () => {
-    setcount(countS + 1)
-  }
 
-  return (
-    <>
+  const colorScheme = useColorScheme();
+  if (colorScheme == 'light') {
+    return (
       <SafeAreaView style={styles.container}>
-        <View>
-          <Button onPress={() => {onPress()}} title='Click me' />  
-        </View>
-        <TouchableHighlight onPress={() => {count()}} underlayColor="white">
-          <View>
-            <Text>Hello</Text>
-          </View>
-        </TouchableHighlight>
-        <View>
-          <Text>{countS}</Text>
-        </View>
+        <Text style={{color: 'black'}}>You chose {colorScheme} theme!</Text>
       </SafeAreaView>
-    </>
-  );
+    )
+  } else {
+    return (
+      <SafeAreaView style={darkStyle.container}>
+        <Text style={{color: 'white'}}>You chose {colorScheme} theme!</Text>
+      </SafeAreaView>
+    )
+  }
 };
 
 const styles = StyleSheet.create({
@@ -53,6 +32,14 @@ const styles = StyleSheet.create({
     padding: 20,
     flex: 1,
     alignItems: 'center',
+  }
+})
+const darkStyle = StyleSheet.create({
+  container: {
+    padding: 20,
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: 'black'
   }
 })
 
